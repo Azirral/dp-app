@@ -80,7 +80,7 @@ class YahtzeeGame:
     def write_scores(self):
         result = ""
         for player_index, player_scores in enumerate(self.scores):
-            result += f"Player {player_index + 1}:\n"
+            result += f"\nPlayer {player_index + 1}:\n"
             for category, score in player_scores.items():
                 if score is not None:
                     result += f"{category}: {score}\n"
