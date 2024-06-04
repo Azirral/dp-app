@@ -12,6 +12,10 @@ class YahtzeeGame:
             'four_of_a_kind': None, 'full_house': None, 'small_straight': None,
             'large_straight': None, 'yahtzee': None, 'chance': None
         }
+        self.current_player = 0  # Start with player 0
+
+    def switch_player(self):
+        self.current_player = 1 - self.current_player  # Switch between 0 and 1
 
     def roll_dice(self, keep=None):
         if self.rolls_left > 0:
