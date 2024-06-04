@@ -21,10 +21,12 @@ def handle_client(conn, addr, game_id):
             else:
                 if data == 'roll':
                     response = game.roll_dice()
+                    game.switch_player()  # Switch player after a valid command
                 elif data.startswith('keep'):
                     _, *kept = data.split()
                     kept = list(map(int, kept))
                     response = game.roll_dice(keep=kept)
+                    game.switch_player()  # Switch player after a valid command
                 elif data == 'reset':
                     game.reset()
                     response = "Game reset"
@@ -34,11 +36,10 @@ def handle_client(conn, addr, game_id):
                 elif data.startswith('add'):
                     _, category = data.split()
                     response = game.add_score(category)
+                    game.switch_player()  # Switch player after a valid command
                 else:
                     response = "Unknown command"
-                game.switch_player()  # Switch player after each command
             conn.sendall(str(response).encode())
-
 def start_server(host='localhost', port=65432):
     global next_game_id
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:

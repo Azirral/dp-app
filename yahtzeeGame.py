@@ -5,7 +5,7 @@ from collections import Counter
 class YahtzeeGame:
     def __init__(self):
         self.dice = [0] * 5
-        self.rolls_left = 3
+        self.turns = [3, 3]  # Number of turns for each player
         self.scores = {
             'ones': None, 'twos': None, 'threes': None, 'fours': None,
             'fives': None, 'sixes': None, 'three_of_a_kind': None,
@@ -18,14 +18,19 @@ class YahtzeeGame:
         self.current_player = 1 - self.current_player  # Switch between 0 and 1
 
     def roll_dice(self, keep=None):
-        if self.rolls_left > 0:
-            self.rolls_left -= 1
-            for i in range(5):
-                if not keep or i not in keep:
-                    self.dice[i] = random.randint(1, 6)
-        else:
-            return "No rolls left"
+        if self.turns[self.current_player] == 0:
+            return "No more rolls left"
+        if keep is None:
+            keep = []
+        for i in range(5):
+            if i not in keep:
+                self.dice[i] = random.randint(1, 6)
+        self.turns[self.current_player] -= 1
         return self.dice
+
+    def reset(self):
+        self.dice = [0] * 5
+        self.turns = [3, 3]
 
     def calculate_score(self, category):
         counter = Counter(self.dice)
@@ -69,7 +74,3 @@ class YahtzeeGame:
         else:
             return "Category already scored"
         return self.scores
-
-    def reset(self):
-        self.dice = [0] * 5
-        self.rolls_left = 3
