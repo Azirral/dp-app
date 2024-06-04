@@ -6,12 +6,14 @@ class YahtzeeGame:
     def __init__(self):
         self.dice = [0] * 5
         self.turns = [3, 3]  # Number of turns for each player
-        self.scores = {
+        self.scores = [
+            {
             'ones': None, 'twos': None, 'threes': None, 'fours': None,
             'fives': None, 'sixes': None, 'three_of_a_kind': None,
             'four_of_a_kind': None, 'full_house': None, 'small_straight': None,
             'large_straight': None, 'yahtzee': None, 'chance': None
-        }
+        } for _ in range(2)
+            ]
         self.current_player = 0  # Start with player 0
 
     def switch_player(self):
@@ -68,9 +70,19 @@ class YahtzeeGame:
             return sum(self.dice)
         return 0
 
-    def add_score(self, category):
-        if self.scores[category] is None:
-            self.scores[category] = self.calculate_score(category)
+    def add_score(self, category, player):
+        if self.scores[player][category] is None:
+            self.scores[player][category] = self.calculate_score(category)
         else:
             return "Category already scored"
-        return self.scores
+        return self.write_scores()
+
+    def write_scores(self):
+        result = ""
+        for player_index, player_scores in enumerate(self.scores):
+            result += f"Player {player_index + 1}:\n"
+            for category, score in player_scores.items():
+                if score is not None:
+                    result += f"{category}: {score}\n"
+            result += "\n"
+        return result
