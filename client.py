@@ -11,7 +11,7 @@ def start_client(host='localhost', port=65432):
               " three_of_a_kind: None\n four_of_a_kind: None\n full_house: None\n small_straight: None\n"
               " large_straight: None\n yahtzee: None\n chance: None\n")
         while True:
-            message = input('Enter command (roll, keep <indices>, score <category>, add <category>, reset, exit): ')
+            message = input('Enter command (roll, keep <indices>, score <category>, add <category>, exit): ')
             if message.lower() == 'exit':
                 break
             s.sendall(message.encode())

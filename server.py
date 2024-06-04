@@ -34,6 +34,7 @@ def handle_client(conn, addr, game_id):
                 elif data.startswith('add'):
                     _, category = data.split()
                     response = game.add_score(category, player_index)
+                    game.reset()
                     game.switch_player()  # Switch player after a valid command
                 else:
                     response = "Unknown command"
