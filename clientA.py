@@ -7,7 +7,7 @@ def start_client(host='localhost', port=65433):
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((host, port))
                 print('Client A is ready')
-                s.sendall(b'ready')
+                s.sendall(b'readyA')
                 print(f'Connected to server at {host}:{port}')
                 while True:
                     message = input('Enter command (roll, keep <indices>, score <category>, add <category>, reset, exit): ')
