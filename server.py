@@ -21,12 +21,10 @@ def handle_client(conn, addr, game_id):
             else:
                 if data == 'roll':
                     response = game.roll_dice()
-                    game.switch_player()  # Switch player after a valid command
                 elif data.startswith('keep'):
                     _, *kept = data.split()
                     kept = list(map(int, kept))
                     response = game.roll_dice(keep=kept)
-                    game.switch_player()  # Switch player after a valid command
                 elif data == 'reset':
                     game.reset()
                     response = "Game reset"
